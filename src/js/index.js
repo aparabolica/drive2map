@@ -38,13 +38,14 @@
       })
       .state('home.map', {
         url: ':driveId/',
-        template: '<map id="map" markers="parsed = (data | parseDrive)"></map><list items="parsed"></list>',
+        template: '<div id="list"><input type="text" ng-model="search" placeholder="Digite uma busca..."><list items="parsed"></list></div><map id="map" markers="parsed = ((data | dFilter:search) | parseDrive)"></map>',
         controller: [
           '$scope',
+          '$filter',
           'Data',
-          function($scope, Data) {
+          function($scope, $filter, Data) {
             $scope.search = '';
-            $scope.data = Data.data;
+            $scope.data = Data.data.feed.entry;
           }
         ],
         resolve: {
@@ -99,28 +100,39 @@
     }
   ]);
 
+  app.filter('dFilter', [
+    function() {
+      return function(input, search) {
+        return _.filter(input, function(item) {
+          return JSON.stringify(item).toLowerCase().trim().indexOf(search.toLowerCase().trim()) !== -1;
+        });
+      }
+    }
+  ]);
+
   app.filter('parseDrive', [
     function() {
+
+  		var gdocsBase = 'gsx$';
+
       return _.memoize(function(input) {
 
-    		var parsed = [];
+        var parsed = [];
 
-        if(typeof input == 'object' && input.feed) {
+        if(input && input.length) {
 
-          var entries = input.feed.entry;
-      		var gdocsBase = 'gsx$';
+          input.forEach(function(entry) {
 
-      		entries.forEach(function(entry) {
-
-            var item = {};
+            item = {};
 
             Object.keys(entry).forEach(function(key) {
-              if (key.indexOf('gsx$') !== -1) {
-                item[key.replace('gsx$', '')] = entry[key]['$t'];
+              if(key.indexOf(gdocsBase) !== -1) {
+                var k = key.replace(gdocsBase, '');
+                item[k] = entry[key]['$t'];
               }
             });
 
-            if (item.lat && item.lon) parsed.push(item);
+            parsed.push(item);
 
           });
 
@@ -131,6 +143,7 @@
       }, function() {
         return JSON.stringify(arguments);
       });
+
     }
   ]);
 
@@ -209,17 +222,23 @@
 
             data.forEach(function(item) {
 
-              var marker = L.marker([item.lat,item.lon]);
+              if(item.lat && item.lon) {
 
-              marker
-                .bindPopup(getPopup(item))
-                .addTo(markerLayer);
+                var marker = L.marker([item.lat,item.lon]);
 
-              markers.push(marker);
+                marker
+                  .bindPopup(getPopup(item))
+                  .addTo(markerLayer);
+
+                markers.push(marker);
+
+              }
 
             });
 
-            map.fitBounds(markerLayer.getBounds());
+            if(markerLayer.getBounds()) {
+              map.fitBounds(markerLayer.getBounds());
+            }
 
           }, 300), true);
 
