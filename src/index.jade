@@ -1,0 +1,27 @@
+doctype html
+html(lang="pt-br")
+  head
+    title drive2map
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")
+    meta(name="viewport" content="width=device-width,initial-scale=1")
+    meta(name="fragment" content="!")
+    link(rel="stylesheet" href="static/skeleton/css/normalize.css")
+    link(rel="stylesheet" href="static/skeleton/css/skeleton.css")
+    link(rel="stylesheet" href="static/leaflet/dist/leaflet.css")
+    link(rel="stylesheet" href="static/leaflet.markerclusterer/dist/MarkerCluster.Default.css")
+    link(rel="stylesheet" href="css/app.css")
+  body
+    div(ui-view)
+      div(ui-view)
+      header#masthead(ng-hide="isMap")
+        form(ng-submit="loadDrive()")
+          input(type="text" placeholder="Cole o ID da sua planilha aqui" ng-model="driveId")
+          input(type="submit" value="Enviar")
+    script(type="text/javascript" src="static/jquery/dist/jquery.min.js")
+    script(type="text/javascript" src="static/underscore/underscore-min.js")
+    script(type="text/javascript" src="static/angular/angular.min.js")
+    script(type="text/javascript" src="static/ui-router/release/angular-ui-router.min.js")
+    script(type="text/javascript" src="static/leaflet/dist/leaflet.js")
+    script(type="text/javascript" src="static/leaflet.markerclusterer/dist/leaflet.markercluster.js")
+    script(type="text/javascript" src="app.js")

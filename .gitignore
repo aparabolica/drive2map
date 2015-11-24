@@ -1,0 +1,6 @@
+.git
+.grunt
+arquivos
+bower_components
+node_modules
+dist

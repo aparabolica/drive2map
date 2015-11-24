@@ -1,0 +1,29 @@
+{
+  "name": "drive2map",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codigourbano/drive2map.git"
+  },
+  "author": "Miguel Peixe <miguel@cardume.art.br> (http://codigourbano.org/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codigourbano/drive2map/issues"
+  },
+  "homepage": "https://github.com/codigourbano/drive2map",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^4.0.1",
+    "grunt-contrib-copy": "^0.8.2",
+    "grunt-contrib-jade": "^0.15.0",
+    "grunt-contrib-less": "^1.1.0",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-gh-pages": "^1.0.0"
+  }
+}
