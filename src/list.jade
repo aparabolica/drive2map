@@ -1,0 +1,9 @@
+#list
+  input(type="text" ng-model="search" placeholder="Digite uma busca...")
+  ul
+    li(ng-repeat="item in items | filter:search")
+      table
+        tbody
+          tr(ng-repeat="(key,val) in item" ng-hide="key == 'lat' || key == 'lon'")
+            th {{key}}
+            td {{val}}

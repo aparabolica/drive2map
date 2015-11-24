@@ -38,11 +38,12 @@
       })
       .state('home.map', {
         url: ':driveId/',
-        template: '<map id="map" markers="data | parseDrive"></map>',
+        template: '<map id="map" markers="parsed = (data | parseDrive)"></map><list items="parsed"></list>',
         controller: [
           '$scope',
           'Data',
           function($scope, Data) {
+            $scope.search = '';
             $scope.data = Data.data;
           }
         ],
@@ -133,6 +134,18 @@
     }
   ]);
 
+  app.directive('list', [
+    function() {
+      return {
+        restrict: 'E',
+        templateUrl: 'list.html',
+        scope: {
+          'items': '='
+        }
+      }
+    }
+  ]);
+
   app.directive('map', [
     function() {
       return {
@@ -177,7 +190,8 @@
           function getPopup(item) {
             var table = '<table><tbody>';
             for(key in item) {
-              table += '<tr><th>' + key + '</th><td>' + item[key] + '</td></tr>';
+              if(key.indexOf('$') != 0 && key !== 'lat' && key !== 'lon')
+                table += '<tr><th>' + key + '</th><td>' + item[key] + '</td></tr>';
             }
             table += '</tbody></table>';
             return table;

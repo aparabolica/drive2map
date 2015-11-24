@@ -23,5 +23,42 @@ body {
   top: 0;
   bottom: 0;
   left: 0;
+  width: 70%;
+}
+
+#list {
+  position: absolute;
+  top: 0;
+  bottom: 0;
   right: 0;
+  width: 30%;
+  overflow: auto;
+  background: #fff;
+  input[type=text] {
+    width: 100%;
+    padding: 20px 40px;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    background: transparent;
+    color: #333;
+    line-height: 1.5;
+    font-size: 18px;
+    height: auto;
+    overflow: auto;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      margin: 0;
+      padding: 20px 40px;
+      border-bottom: 1px solid #ddd;
+      table {
+        width: 100%;
+      }
+    }
+  }
 }
