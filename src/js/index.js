@@ -212,6 +212,12 @@
 
           var markers = [];
 
+          var icon = L.MakiMarkers.icon({
+            icon: 'marker',
+            color: '#666',
+            size: 's'
+          });
+
           scope.$watch('markers', _.debounce(function(data) {
 
             markers.forEach(function(marker) {
@@ -224,7 +230,9 @@
 
               if(item.lat && item.lon) {
 
-                var marker = L.marker([item.lat,item.lon]);
+                var marker = L.marker([item.lat,item.lon], {
+                  icon: icon
+                });
 
                 marker
                   .bindPopup(getPopup(item))
@@ -236,7 +244,7 @@
 
             });
 
-            if(markerLayer.getBounds()) {
+            if(markers.length) {
               map.fitBounds(markerLayer.getBounds());
             }
 
